@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{mathbbol}
+\usepackage{mathtools}
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{chngcntr}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[verbose]{placeins}
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\title{Written Assignment 3}
+\author{CS135-B/LF}
+\date{February 17, 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+\begin{align}
+     & \neg r                    & \text{Hypothesis}                  & \\
+     & q \implies r              & \text{Hypothesis}                  & \\
+     & \neg q                    & \text{Modus tollens, 1,2}          & \\
+     & \neg q \implies u \land s & \text{Hypothesis}                  & \\
+     & u \land s                 & \text{Modus ponens, 3,4}           & \\
+     & s                         & \text{Simplification, 5}           & \\
+     & p \lor q                  & \text{Hypothesis}                  & \\
+     & p                         & \text{Disjunctive syllogism, 3, 7} & \\
+     & p \land s                 & \text{Conjunction, 6, 8}           & \\
+     & p \land s \implies t      & \text{Hypothesis}                  & \\
+     & t                         & \text{Modus ponens, 9,10}          &
+\end{align}
+
+\section{}
+
+For simplicity's sake, I will use this key to represent the given propositions:
+\begin{itemize}
+    \item $p$: The dorm is locked.
+    \item $q$: The phone is on top of the tall bookshelf.
+    \item $r$: The dorm room is odd-numbered.
+    \item $s$: The phone is under the pillow.
+    \item $t$: The dorm has more than 10 floors.
+    \item $u$: The phone is in the bottom drawer of the desk.
+\end{itemize}
+
+This gives us the following list of statements:
+
+\begin{itemize}
+    \item[] $p \implies \neg q$
+    \item[] $r \implies q$
+    \item[] $p$
+    \item[] $r \lor s$
+    \item[] $t \implies u$
+\end{itemize}
+Using this list, we can deduce the following:
+\begin{align}
+     & p                 & \text{Hypothesis}                  & \\
+     & p \implies \neg q & \text{Hypothesis}                  & \\
+     & \neg q            & \text{Modus ponens, 1, 2}          & \\
+     & r \implies q      & \text{Hypothesis}                  & \\
+     & \neg r            & \text{Modus tollens, 3, 4}         & \\
+     & r \lor s          & \text{Hypothesis}                  & \\
+     & s                 & \text{Disjunctive syllogism, 5, 6} &
+\end{align}
+We have now confirmed that $s$ must be true. If we check the key, this means that
+the phone is under the pillow.
+
+\section{}
+Let us start at the contradiction form $x = \neg x$ and derive the given
+formula from it. I will use $E$ to replace $x$, and introduce new variables in
+reverse alphabetical order.
+\begin{align*}
+     & E \lor \neg E                                                                                                           & \text{Original proposition} & \\
+     & \equiv (D \lor E) \land (\neg D \lor E) \land \neg E                                                                    & \text{Resolution}           & \\
+     & \equiv (B \lor E) \land (\neg B \lor D) \land (\neg D \lor E) \land \neg E                                              & \text{Resolution}           & \\
+     & \equiv (C \lor B) \land (\neg C \lor E) \land (\neg B \lor D) \land (\neg D \lor E) \land \neg E                        & \text{Resolution}           & \\
+     & \equiv (A \land B) \land (\neg A \lor C) \land (\neg B \lor D) \land (\neg C \lor E) \land (\neg D \lor E) \land \neg E & \text{Resolution}           &
+\end{align*}
+
+
+\section{}
+\subsection{}
+Although the \textbf{argument} put forward is true, this is not a valid
+argument \textbf{form}. \\ As an example, I will replace the predicate ``The
+sum of alternating digits of $ x $ is a multiple of 11'' with ``I ate an apple
+for lunch.'' Then I will replace the predicate ``$ x $ is a multiple of 11''
+with ``I ate lunch today.'' Here is what this substitution yields:
+\begin{align*}
+               &  \text{ If I ate an apple for lunch today, then I ate lunch today.} & \\
+               &  \text{ I did not eat an apple for lunch today.}                    & \\
+    \therefore &  \text{ I did not eat lunch today.}                                 &
+\end{align*}
+This form is invalid because the premises are true:
+\begin{itemize}
+    \item It is true that if I ate an apple for lunch today, then I ate lunch today. I
+          would have eaten the apple for lunch.
+    \item I did not eat an apple for lunch today.
+\end{itemize}
+And the conclusion is false:
+\begin{itemize}
+    \item I had pancakes for lunch, therefore I \emph{did} have lunch.
+\end{itemize}
+This new version of the argument demonstrates that this form, which is denying the antecedent rather than the consequent, is not valid.
+
+\subsection{}
+This is another invalid argument form.\\ Here is a reinterpretation of the
+argument with different predicates:
+\begin{align*}
+               & \text{Every player on the Yankees plays baseball.} & \\
+               & \text{I play baseball.}                            & \\
+    \therefore & \text{I am on the Yankees.}                        &
+\end{align*}
+This form is invalid because the premises are true:
+\begin{itemize}
+    \item Every player on the Yankees plays baseball (no matter how well).
+    \item I do play baseball.
+\end{itemize}
+And the conclusion is false:
+\begin{itemize}
+    \item I am not on the Yankees.
+\end{itemize}
+This new version of the argument demonstrates that this form, which is affirming the consequent rather than the antecedent, is not valid.
+
+
+
+\end{document}
+
+latexmk -pvc -pvctimeoutmins=5 -pdf -pdflatex="pdflatex -interaction
+nonstopmode" hw3.tex
+
+We can use De Morgan's laws to transform the argument as such:
+\begin{align*}
+               & \forall x(\neg T(x) \lor \neg S(x)) \\
+               & \forall x(\neg S(x) \lor \neg H(x)) \\
+    \therefore & \forall x(\neg T(x) \lor \neg H(x))
+\end{align*}
+Let us simplify it further by looking at how these predicates can be true for one athlete:
+\begin{align*}
+               & \neg t \lor \neg s \\
+               & \neg s \lor \neg h \\
+    \therefore & \neg t \lor \neg h
+\end{align*}
+At this stage, it looks like the original argument form is a confusion of the Resolution rule of inference.

@@ -1,0 +1,227 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{mathbbol}
+\usepackage{mathtools}
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{chngcntr}
+\usepackage{amssymb}
+\usepackage[verbose]{placeins}
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\title{Written Assignment 5}
+\author{CS135-B/LF}
+\date{March 5, 2024}
+
+\begin{document}
+\maketitle
+\raggedright
+
+\section{}
+\subsection{}
+$f$ may equal any of the following:
+\begin{gather*}
+    \{ (a, 1), (b, 1), (c, 2) \} \\
+    \{ (a, 1), (b, 2), (c, 1) \} \\
+    \{ (a, 1), (b, 2), (c, 2) \} \\
+    \{ (a, 2), (b, 1), (c, 1) \} \\
+    \{ (a, 2), (b, 1), (c, 2) \} \\
+    \{ (a, 2), (b, 2), (c, 1) \}
+\end{gather*}
+All of these sets of pairs are functions and their domains contain all elements 
+of $B$, therefore they are all onto functions $f: A \rightarrow B$.
+
+\subsection{}
+$f$ may equal any of the following:
+\begin{gather*}
+    \{ (a, 1), (b, 1), (c, 1) \} \\
+    \{ (a, 2), (b, 2), (c, 2) \}
+\end{gather*}
+All of these sets of pairs are functions but their domains do not contain all 
+elements of $B$, therefore none of them are onto functions $f: A \rightarrow B$.
+
+\subsection{}
+There are no one-to-one functions $f: A \rightarrow B$ because $|A| > |B|$. As such
+it is impossible to map each element of $A$ uniquely onto an element of $B$.
+
+\section{}
+\subsection{}
+We can prove that $P$ is one-to-one by proving that, if two inputs provide the same output, then the inputs must be equal.\\
+Let us define two strings $a, b \in X$. To prove that $P$ is one-to-one, we can find that if $P(a) = P(b)$ then $a = b$. 
+If $P(a) = P(b)$, then $1a = 1b$.
+Since these strings are equal, removing both of their first character will still result in equal strings. This leaves us with $a = b$. 
+This proves that in all cases where $P(a) = P(b)$ then it must be true that $a = b$. As such, $P$ is a one-to-one function from $X$ to $X$.
+
+\subsection{}
+A simple counterexample is 0. Any bit string that starts with 0 is also a counterexample.
+\begin{enumerate}
+    \item $P$'s domain and target are both $X$, the set of all bit strings, as per its definition. 
+    \item $X$ contains strings that begin with both 1 and 0. 
+    \item $P$ guarantees that the first element of any string in its range will be 1. 
+    \item Any element in $X$ that starts with 0 is outside of the range of $P$.
+    \item $P$ cannot be onto because there are elements in its target that are not in its domain.
+\end{enumerate}
+
+\section{}
+We need to prove:
+\begin{equation} 
+    \floor*{ \frac{\floor*{\dfrac{x}{3}}}{2} } = \floor*{ \frac{x}{6} }
+\end{equation}
+Let us start by making a placeholder for the left side of the equation. Let
+\begin{equation} 
+    \floor*{ \frac{\floor*{\dfrac{x}{3}}}{2} } = \alpha.
+\end{equation}
+Table 1, on page 159 of our textbook \emph{Discrete Mathematics and Its 
+Applications}, offers the following biconditional:
+\begin{equation} \tag{Table 1.(1a)}
+    \floor{x} = n \text{ if and only if } n \leq x < n+1
+\end{equation}
+We can apply (Table 1.(1a)) to (2) to acquire the following:
+\begin{equation*}
+    \alpha \leq \frac{\floor*{\dfrac{x}{3}}}{2} < \alpha + 1
+\end{equation*}
+We can multiply each part of this compound inequality by 2 to
+remove that denominator:
+\begin{equation}
+    2\alpha \leq \floor*{\dfrac{x}{3}} < 2(\alpha + 1)
+\end{equation}
+Table 1 also offers the following compound inequality:
+\begin{equation*} \tag{Table 1.(2)}
+    x-1 < \floor{x} \leq x \leq \ceil{x} < x+1
+\end{equation*}
+We can shave this down to the relevant compound inequality:
+\begin{equation}
+    \floor{x} \leq x < x+1
+\end{equation}
+Applying (4) to the parts of (3), we can reasonably assume the following:
+\begin{gather}
+    2 \alpha \leq \floor*{\dfrac{x}{3}} \implies 2 \alpha \leq \dfrac{x}{3} \\
+    \floor*{\dfrac{x}{3}} < 2\alpha +2 \implies \dfrac{x}{3} < 2(\alpha + 1)
+\end{gather}
+Combining the right sides of (5) and (6), we get the following compound inequality:
+\begin{equation*}
+    2 \alpha \leq \dfrac{x}{3} < 2(\alpha + 1)
+\end{equation*}
+Dividing all parts by 2 gives us the following:
+\begin{equation}
+    \alpha \leq \dfrac{x}{6} < \alpha + 1
+\end{equation}
+We can now apply (Table 1.(1a)) to (6):
+\begin{equation*}
+    \floor*{\dfrac{x}{6}} = \alpha
+\end{equation*}
+And we can fill in the value of $\alpha$ by applying (2):
+\begin{equation*}
+    \floor*{\dfrac{x}{6}} = \floor*{ \frac{\floor*{\dfrac{x}{3}}}{2} }
+\end{equation*}
+If we switch the sides, we reach (1), which was to be proven:
+\begin{equation} \tag{1}
+    \floor*{ \frac{\floor*{\dfrac{x}{3}}}{2} } = \floor*{ \frac{x}{6} }
+\end{equation}
+
+\section{}
+\subsection{}
+First we must understand that the sum of two integers must produce another integer. This is because there is no way for two numbers with no imaginary or decimal components to sum to a number that has either. This allows us to focus on proving that $\frac{1}{2}(k+n)(k+n+1)$ always produces an integer.
+\begin{enumerate}
+    \item By definition, adding 1 to an odd integer produces an even integer.
+    \item By definition, adding 1 to an even integer produces an odd integer.
+    \item Therefore if $(k+n)$ is even then $(k+n+1)$ will be odd and if $(k+n)$ is odd then $(k+n+1)$ will be even.
+    \item Therefore $(k+n)*(k+n+1)$ will always be a product of an even integer and an odd integer.
+    \item By definition, all even integers are multiples of 2.
+    \item Exactly one of $(k+n)$ or $(k+n+1)$ are guaranteed to be even and therefore be a multiple of 2.
+    \item Therefore the product $(k+n)*(k+n+1)$ will also be a multiple of 2 and therefore even.
+    \item Therefore dividing $(k+n)*(k+n+1)$ by 2 will always yield an integer.
+\end{enumerate}
+Since $\frac{1}{2}(k+n)(k+n+1)$ always produces an integer, adding another integer $k$ to it will always produce an integer, which was to be proven.
+
+\subsection{}
+We are given
+\begin{equation*}
+    T(k,n) = k + \frac{1}{2}(k+n)(k+n+1)
+\end{equation*}
+for $k,n,p \in \mathbb{Z}^+$. Let
+\begin{gather*}
+    S(k,p) = k+\frac{1}{2}p(p+1)\\
+    C(k,n) = (k,k+n)
+\end{gather*}
+so that
+\begin{equation*}
+    T(k,n) = S(C(k,n)) = S \circ C.
+\end{equation*} 
+A function that is a composition of injective functions is injective itself through hypothetical syllogism. To prove that $T$ is injective, we must prove that $S$ and $C$ are both injective. It is clear that $C$ is; given $k$, there is only one number you can add to $k$ to find any other number.
+$S$ is more tricky. We need to prove that if $S(k,p) = S(k,p)$ then $k=k'$ and $p=p'$. We can assume $k = k'$ because only one $k$ value will be given and carried throughout this composition.
+\begin{align*}
+    k+\frac{1}{2}p(p+1) &= k+\frac{1}{2}p'(p'+1)\\
+    \frac{1}{2}p(p+1) &= \frac{1}{2}p'(p'+1)\\
+    p(p+1) &= p'(p'+1)\\
+    p&>n\\
+    p'&>n'
+\end{align*}
+Without loss of generality, prove that the following is a contradiction:
+\begin{equation*}
+    p(p+1) > p'(p'+1)
+\end{equation*}
+
+\section{}
+\begin{enumerate}
+    \item It was mentioned in Lecture 12 that, to vacate one room, all guests would be moved from their current room $n$ to room $n+1$.
+    \item The rooms that must be vacated are any room whose number is a multiple of 3, i.e.\ any room $3n$. \\
+    We cannot simply move anyone in these rooms to the first available room at the end because, we recall, all rooms are occupied.
+    \item We must move all unaffected guests (i.e.\ all of those \textbf{not} in a room $3n$) from their current room $n$ to room $3n+1$. 
+    \item Currently:
+    \begin{enumerate}
+        \item All rooms $3n$ are occupied.
+        \item All rooms $3n+1$ are occupied.
+        \item All rooms $3n+2$ are vacant.
+    \end{enumerate}
+    \item This leaves us space to move all guests in a room $3n$ to a new room $3n+2$. Now:
+    \begin{enumerate}
+        \item All rooms $3n$ are vacant so we can begin repairs.
+        \item All rooms $3n+1$ are occupied with the unaffected guests.
+        \item All rooms $3n+2$ are occupied with the affected guests.
+    \end{enumerate}
+    All guests have a room and no guests are assigned to any room $3n$, which was the situation we originally wanted.
+\end{enumerate}
+
+
+
+\end{document}
+
+
+
+
+
+
+onto relations:
+\{ (a, 1), (b, 2) \} \\
+\{ (a, 2), (b, 1) \} \\
+\{ (a, 1), (c, 2) \} \\
+\{ (a, 2), (c, 1) \} \\
+\{ (b, 1), (c, 2) \} \\
+\{ (b, 2), (c, 1) \} \\
+
+NOT onto relations:
+\{ (a, 1) \} \\
+\{ (a, 2) \} \\
+\{ (b, 1) \} \\ 
+\{ (b, 2) \} \\
+\{ (c, 1) \} \\
+\{ (c, 2) \} \\
+\{ (a, 1), (b, 1) \} \\
+\{ (a, 1), (c, 1) \} \\
+\{ (b, 1), (c, 1) \} \\
+
+
+
+slightly different hilbert soln
+\begin{enumerate}
+    \item It was mentioned in Lecture 12 that, to vacate just the first room, all guests would be moved from their current room $n$ to room $n+1$.
+    \item The rooms that must be vacated are any room whose number is a multiple of 3, i.e.\ any room $3n$. \\
+    We cannot simply move anyone in these rooms to the first available room at the end because, we recall, all rooms are occupied.
+    \item Instead, we can move everyone in the hotel from their current room $n$ to room $3n+1$. \\ This move ensures that nobody is sent to a room that is a multiple of 3 and that everybody still has a room.
+\end{enumerate}
+\footnotesize{Note: We could also move everyone to room $3n+2$ or simply to the next room that is not a multiple of 3, but the math for these situations is not quite as fun or pretty as $3n+1$.}

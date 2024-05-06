@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathbbol}
+\usepackage{mathtools}
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{chngcntr}
+\usepackage{amssymb}
+\usepackage[verbose]{placeins}
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\renewcommand{\mod}{\text{ mod }}
+
+\title{Written Assignment 7}
+\author{CS 135-B/LF}
+\date{April 4, 2024}
+
+\begin{document}
+\maketitle
+\raggedright
+
+\section{}
+\subsection{}
+\begin{align*}
+    T(1) &= 2T(\floor{\frac{1}{4}}) + \sqrt{1} \\
+         &= 2T(0) + 1 \\
+         &= 2(1) + 1 \\
+    T(1) &= 3
+\end{align*}
+\begin{align*}
+    T(2) &= 2T(\floor{\frac{2}{4}}) + \sqrt{2} \\
+         &= 2T(0) + \sqrt{2} \\
+    T(2) &= 2 + \sqrt{2}\\
+         &\approx 3.41421
+\end{align*}
+
+\subsection{}
+We need to prove that $T(n) \leq 3\sqrt{n}\log_2 n$ for all $n\geq 2$.\\
+Let's check this premise for basis $n=2$:
+\begin{align*}
+    T(2) &\leq 3\sqrt{2}\log_2(2) \\
+    2 + \sqrt{2} &\leq 3\sqrt{2} \\
+    2 &\leq 2\sqrt{2} \\
+    1 &\leq \sqrt{2} \\
+    &\top
+\end{align*}
+Inductive hypothesis: Let $k$ be an integer $\geq 2$. We'll assume that $T(i) \leq 3\sqrt{i}\log_2 i$ for all $2 \leq i\leq k, i\in \mathbb{Z}$.\\
+Now we must prove that
+\begin{equation*}
+    T(k+1) \leq 3\sqrt{k+1}\log_2(k+1).
+\end{equation*}
+\begin{align*}
+    T(k+1) &= 2T(\floor*{\frac{k+1}{4}}) + \sqrt{k+1} & \text{By definition of $T$}\\
+           &\leq 2(3\sqrt{\floor*{\frac{k+1}{4}}}\log_2\floor*{\frac{k+1}{4}}) + \sqrt{k+1} & \text{By the inductive hypothesis} \\
+           &\leq 2(3\sqrt{\frac{k+1}{4}}\log_2(\frac{k+1}{4})) + \sqrt{k+1} & \floor{x} \leq x \\
+           &= 2(\frac{3}{2}\sqrt{k+1}\log_2(\frac{k+1}{4})) + \sqrt{k+1} & \text{By algebra} \\
+           &= 3\sqrt{k+1}\log_2(\frac{k+1}{4}) + \sqrt{k+1} \\
+           &= 3\sqrt{k+1}(\log_2(k+1) - \log_2(4)) + \sqrt{k+1} \\
+           &= 3\sqrt{k+1}(\log_2(k+1) - 2) + \sqrt{k+1} \\
+           &= 3\sqrt{k+1}\log_2(k+1) - 6\sqrt{k+1} + \sqrt{k+1} \\
+           &= 3\sqrt{k+1}\log_2(k+1) - 5\sqrt{k+1} \\
+           &< 3\sqrt{k+1}\log_2(k+1)                                    &\blacksquare
+\end{align*}
+
+\section{}
+Let $a,b,c,d,m \in \mathbb{Z}$ with $m \geq 2$. We'll prove that $a \equiv b (\text{mod } m) \wedge c \equiv d (\text{mod } m) \implies a-c\equiv b-d (\text{mod } m)$. Given
+
+
+\begin{equation*}
+    \begin{cases}
+            a \equiv b (\text{mod } m) \\
+            c \equiv d (\text{mod } m)
+    \end{cases}
+\end{equation*}
+
+we can break this down into
+\begin{equation*}
+    \begin{cases}
+        a \text{ mod } m = b \text{ mod } m \\
+        c \text{ mod } m = d \text{ mod } m
+    \end{cases}
+\end{equation*}
+by the definition of congruence. We'll scale the second equation by $-1$,
+\begin{equation*}
+    \begin{cases}
+    a \text{ mod } m &= b \text{ mod } m \\
+    (-c) \text{ mod } m &= (-d) \text{ mod } m
+\end{cases}
+\end{equation*}
+
+add the equations together as one can do with a system,
+\begin{equation*}
+    (a-c)\text{ mod }m = (b-d)\text{ mod }m
+\end{equation*}
+
+and rewrite this as the congruence
+\begin{equation*}
+    a-c\equiv b-d (\text{mod } m).
+\end{equation*}
+$\blacksquare$
+
+\section{}
+No. For $k=6$, $2*3*5*7*11*13 +1 = 30031$.
+30031 has factors $\{59, 509\}$ which means 30031 is not prime.
+Therefore $p_1p_2\cdots p_k +1$ is not always prime.
+
+\section{}
+No. Since 30 is not divisible by 29, let $m=30$:
+\begin{align*}
+    & 2m^2 + 29 \\
+    &= 2(30)^2 + 29 \\
+    &= 1829
+\end{align*}
+1829 has factors $\{ 31, 59 \}$ which means 1829 is not prime. Therefore $2m^2 + 29$ does not always produce a prime number when m is not divisible by 29.
+
+
+\section{}
+Let's prove a basis where $k=1$: and since $1^4 -1 = 0$ and 0 is divisible by 16, this basis holds.\\
+Let's assume that $k$ is divisible by 16. With this we can say that there is some integer $s$ for which $k^4 - 1 = 16s$.\\
+Let's prove that $k+2$ is divisible by 16 ($k+2$ because k and this equation's result must be odd). We can do this by proving that there is some integer which, when multiplied by 16, gives some expression of $k$. For some integer $t$:
+\begin{align*}
+            16t &= (k+2)^4 - 1 \\
+                &= (k^2 + 4k + 4)^2 - 1 \\
+                &= k^4 + 8k^3 + 24k^2 + 32k + 16 - 1 \\
+                &= k^4 - 1 + 8k^3 + 24k^2 + 32k + 16 \\
+\intertext{By the inductive hypothesis: there is some integer $s$ for which $k^4 - 1 = 16s$}
+                &= 16s + 8k^3 + 24k^2 + 32k + 16 \\
+                &= 16s + 8k^2(k+3) + 16(2k+1)
+\end{align*}
+Since $k$ is an integer, we can reasonably expect $2k+1$ to be an integer as well. $8k^2(k+3)$ will be a multiple of 8 and some odd number $k^2(k+3)$, which is guaranteed to be divisible by 16. We can think of this equation as
+\begin{equation*}
+    (\text{Some multiple of 16}) = (\text{The sum of multiples of 16})
+\end{equation*}
+which proves that $k+2$ produces a multiple of 16, which proves that for all odd integers $k \geq 1$, $k^4 - 1$ is divisible by 16.
+
+
+\section{}
+\begin{align*}
+    &  10^{6,000,000,000,000,000,000,000,000,000,000,000,000,000,002} \mod 13 \\
+    &= (10 \mod 13)(10 \mod 13)(10^{6,000,000,000,000,000,000,000,000,000,000,000,000,000,000} \mod 13) \mod 13 \\
+    &= 10 \cdot 10 \cdot (10^{6\times 10^{42}} \mod 13) \mod 13 \\
+    &= 100 \cdot (10^6 \mod 13) \cdot (10^{10^{42}} \mod 13) \mod 13 \\
+    &= 100 \cdot 1 \cdot (10^{10^{21}} \mod 13)^2 \mod 13\\
+    &= 100 \cdot ((10^{10^7} \mod 13)^3 \mod 13)^2 \mod 13\\
+    &= 100 \cdot (((10^{10} \mod 13)^7 \mod 13))^3 \mod 13)^2 \mod 13\\
+    \intertext{Now we have a lot of easily-calculable modulus operations.}
+    &= 100 \cdot ((3^7 \mod 13)^3 \mod 13)^2 \mod 13\\
+    &= 100 \cdot 1^2 \mod 13\\
+    &= 100 \cdot 1 \mod 13\\
+    &= 100 \mod 13 \\
+    &= 9
+\end{align*}
+\end{document}

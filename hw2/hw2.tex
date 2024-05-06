@@ -1,0 +1,175 @@
+\documentclass[draft]{article}
+\usepackage{amsmath}
+\usepackage{mathbbol}
+\usepackage{mathtools}
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+
+
+\title{CS 135 Written Assignment 2}
+\date{February 9, 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+\begin{equation*}
+	B \equiv (p \land \neg q \land r) \lor (\neg p \land q \land \neg r) \lor (\neg p \land \neg q \land r)
+\end{equation*}
+To get this formula, I combined all of the values of $p$, $q$, and $r$ that return true into one statement in conjunctive normal form.
+
+\section{}
+\subsection{}
+Yes. There is one set of values for $p$, $q$, and $r$ that makes this equivalency true. \\
+If $p=T$, $q=F$, and $r=T$:
+\begin{align*}
+	C(p, q, r) & \equiv (p \lor q) \land (p \lor \neg q) \land ( \neg p \lor \neg q) \land ( \neg p \lor r) \land (p \lor \neg r) \\
+	C(T, F, T) & \equiv (T \lor F) \land (T \lor \neg F) \land ( \neg T \lor \neg F) \land ( \neg T \lor T) \land (T \lor \neg T) \\
+	           & \equiv T \land (T \lor T) \land (F \lor T) \land ( F \lor T) \land (T \lor F) \\
+	           & \equiv T \land T \land T \land T \land T \\
+	           & \equiv T
+\end{align*}
+
+\subsection{}
+No. While $p=F$ the statement cannot be true.
+\begin{align*}
+    C(p, q, r) & \equiv (p \lor q) \land (p \lor \neg q) \land ( \neg p \lor \neg q) \land ( \neg p \lor r) \land (p \lor \neg r) & \text{Original proposition}& \\
+    C(F, q, r) & \equiv (F \lor q) \land (F \lor \neg q) \land ( \neg F \lor \neg q) \land ( \neg F \lor r) \land (F \lor \neg r) & p = F\\
+    & \equiv (F \lor q) \land (F \lor \neg q) \land ( T \lor \neg q) \land ( T \lor r) \land (F \lor \neg r) & \text{Complement Laws} & \\
+    & \equiv (q) \land (\neg q) \land ( T \lor \neg q) \land ( T \lor r) \land (\neg r) & \text{Identity laws} &\\
+    & \equiv (q) \land (\neg q) \land T \land T \land (\neg r) & \text{Domination laws} &\\
+    & \equiv F \land T \land T \land (\neg r) & \text{Complement law} &\\
+    & \equiv F & \text{Domination laws} &
+\end{align*}
+
+\section{}
+I propose the following steps to convert any Boolean formula $\phi$ into a CNF format.
+\begin{enumerate}
+    \item Negate $\phi$, finding $\neg \phi$.
+    \item Rewrite $\neg \phi$ in DNF.
+    \item Negate $\neg \phi$, finding $\neg \neg \phi$ which is logically equivalent to $\phi$.
+    \item Convert $\neg \neg \phi$ into CNF using De Morgan's laws.
+\end{enumerate}
+For example, let us take a look at this proposition:
+\begin{align*}
+    \phi(a,b,c) & \equiv (a \lor b) \lor (c \land \neg b) \lor (\neg b \implies c) \\
+    \neg \phi(a,b,c) & \equiv \neg ((a \land b) \lor (c \land \neg b) \lor (\neg b \implies c))
+\end{align*}
+Now we can find $\neg \phi$ in DNF form using a truth table:
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{ |c|c|c||c| }
+        \hline
+        a & b & c & $\neg \phi (a,b,c)$\\
+        \hline
+        F & F & F & T\\
+        F & F & T & F\\
+        F & T & F & F\\
+        F & T & T & F\\
+        T & F & F & T\\
+        T & F & T & F\\
+        T & T & F & F\\
+        T & T & T & F\\
+        \hline
+    \end{tabular}
+    \label{tab:notphitruth}
+\end{table}
+\begin{equation*}
+    \neg \phi (a,b,c) \equiv (\neg a \land \neg b \land \neg c) \lor (a \land \neg b \land \neg c)
+\end{equation*}
+Negating $\neg \phi$ gives us $\neg \neg \phi$, which is logically equivalent to $\phi$.
+\begin{align*}
+    \neg \phi (a,b,c) & \equiv (\neg a \land \neg b \land \neg c) \lor (a \land \neg b \land \neg c) & \text{Original proposition} & \\
+    \neg \neg \phi (a,b,c) & \equiv \neg ((\neg a \land \neg b \land \neg c) \lor (a \land \neg b \land \neg c)) & \text{Negation} & \\
+    \phi (a,b,c) & \equiv \neg ((\neg a \land \neg b \land \neg c) \lor (a \land \neg b \land \neg c)) & \text{Double negation law} & \\
+    & \equiv \neg (\neg a \land \neg b \land \neg c) \land \neg (a \land \neg b \land \neg c) & \text{De Morgan's law} & \\
+    & \equiv (a \lor b \lor c) \land (\neg a \lor b \lor c) & \text{De Morgan's laws} &\\
+\end{align*}
+The last equivalency listed is now in CNF.
+
+\section{}
+We can use De Morgan's law on quantifiers as such:
+\begin{align*}
+    & \neg( \mathop{\exists}_{N \geq 1} 
+        \mathop{\forall}_{\substack{w \in L \\ |w| \geq N}} 
+        \mathop{\exists}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \mathop{\forall}_{i \geq 0 }
+        xy^i z \in L) & \text{Original proposition} & \\
+    & \equiv \mathop{\forall}_{N \geq 1} 
+        \neg( \mathop{\forall}_{\substack{w \in L \\ |w| \geq N}} 
+        \mathop{\exists}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \mathop{\forall}_{i \geq 0 }
+        xy^i z \in L) & \text{De Morgan's Law} &\\
+    & \equiv \mathop{\forall}_{N \geq 1} 
+        \mathop{\exists}_{\substack{w \in L \\ |w| \geq N}} 
+        \neg (\mathop{\exists}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \mathop{\forall}_{i \geq 0 }
+        xy^i z \in L) & \text{De Morgan's Law} &\\
+    & \equiv \mathop{\forall}_{N \geq 1} 
+        \mathop{\exists}_{\substack{w \in L \\ |w| \geq N}} 
+        \mathop{\forall}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \neg (\mathop{\forall}_{i \geq 0 }
+        xy^i z \in L) & \text{De Morgan's Law} &\\
+    & \equiv \mathop{\forall}_{N \geq 1} 
+        \mathop{\exists}_{\substack{w \in L \\ |w| \geq N}} 
+        \mathop{\forall}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \mathop{\exists}_{i \geq 0 }
+        \neg (xy^i z \in L) & \text{De Morgan's Law} &\\
+    & \equiv \mathop{\forall}_{N \geq 1} 
+        \mathop{\exists}_{\substack{w \in L \\ |w| \geq N}} 
+        \mathop{\forall}_{\substack{x,y,z \\ w = xyz \\ |y|>0 \\ |xy| \leq N}}
+        \mathop{\exists}_{i \geq 0 }
+        xy^i z \notin L & \text{De Morgan's Law} &\\
+\end{align*}
+
+\section{}
+\subsection{}
+To start interpreting this statement I will convert it into plain English: \\
+\texttt{
+There exist some positive integers x, y, and z for which all of the following are true: \\
+x, y, and z are integers greater than 25. \\
+x, y, and z are squares of a positive integer. \\
+The sum of x and y is equal to z. \\
+}
+Because only existential quantifiers are used, we only need to find one set of $(x,y,z)$ 
+where all of these conditions are met to prove this statement true. \\
+Take for example $(36,64,100)$: \\
+\texttt{
+36, 64, and 100 are positive integers. \\
+36, 64, and 100 are integers greater than 25. \\
+36, 64, and 100 are squares of a positive integer. \\
+The sum of 36 and 64 is equal to 100. \\
+}
+With this example we can prove this statement true.
+
+\subsection{}
+Again I will write out the conditions in plain English: \\
+\texttt{
+For all positive integers x, there exists a positive integer y for which all of the \\
+following are true: \\
+y is a cube of a positive integer. \\
+The product of x and y is a cube of a positive integer. \\
+}
+Because a universal quantifier is present, we can disprove this statement by finding a value $x$ that makes the statement false. \\
+Let us check $(3,8)$: \\
+\texttt{
+3 is a positive integer, 8 is a positive integer. \\
+8 is a cube of a positive integer. \\
+The product of 3 and 8 is NOT a cube of a positive integer. \\
+}
+3 $\times$ 8 = $24$, and the cube root of 24 is $2.88449\ldots$ which is not a positive integer. As such, the statement is false.
+
+\section{}
+John is incorrect. Here is an example: if $P(x,y) \equiv x=y$, $(\dag)$ is satisfied but $(\dag\dag)$ is not.\\
+Let us prove $(\dag)$ true:
+\begin{equation*}
+    \mathop{\forall}_{x \in \mathbb{R}} \mathop{\exists}_{y \in \mathbb{R}} x=y 
+\end{equation*} 
+Because $x$ and $y$ are in the same set, $x = y$ will always be true. Now to prove $(\dag\dag)$ false:
+\begin{equation*}
+    \mathop{\exists}_{x \in \mathbb{R}} \mathop{\exists}_{y \in \mathbb{R}} y>x \land x=y 
+\end{equation*}
+This conjunction is always false because no $y$ can be both exclusively greater than and equal to $x$.
+
+\end{document} 
+latexmk -pvc -pvctimeoutmins=5 -bibtex -pdf -pdflatex="pdflatex -interaction nonstopmode" hw2.tex

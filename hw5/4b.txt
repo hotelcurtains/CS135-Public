@@ -1,0 +1,30 @@
+let S(k,p) = k + (1/2)p(p+1)  		i.e. T(k,n) but k+n = p
+let C(n) = p = k + n			p > k becuase p = k+n and n cannot be 0
+
+T(k,n) = S(k, C(n))
+
+prove C is injective
+prove S is injective?
+=> T is injective?
+injective == one-to-one
+
+
+
+
+assume p > p'     (=> p != p')  	WLOG
+on contradiction, p must be = p'
+
+k + (1/2)p(p+1) > k + (1/2)p'(p'+1)
+(1/2)p(p+1) > (1/2)p'(p'+1)
+p(p+1) > p'(p'+1)
+
+
+???
+p/p' > (p+1)/(p'+1)
+
+p > p'(p'+1)/(p+1)
+
+k=1, n=1;  n'=2
+p=2, p'=3 \in Z+
+2 > 3(3+1)/(2+1)
+2 > 4 FALSE
